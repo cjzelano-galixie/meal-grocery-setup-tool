@@ -319,8 +319,7 @@
           placeholder="What's on hand in the pantry? Remember to input the amount you have plus the item e.g. 1 can of corn."
         ></textarea>
       </div>
-    </div>
-    <div class="form-group">
+      <div class="form-group">
         <label for="general">General Staples</label>
         <textarea
           id="general"
@@ -328,6 +327,7 @@
         ></textarea>
       </div>
     </div>
+    
 
     <button onclick="generatePrompt()">
       Copy Completed Prompt to Clipboard
@@ -347,6 +347,7 @@
         const urls = document.getElementById("urls").value || "None specified";
         const store =
           document.getElementById("store").value || "Any local store";
+        const servings = document.getElementById("servings").value || "None specified"
         const days = document.getElementById("days").value;
         const restrictions =
           document.getElementById("restrictions").value || "None";
@@ -366,6 +367,7 @@
 - Meals Needed: ${meals}
 - Recipe Inspiration URLs: ${urls}
 - Grocery Store: ${store}
+- Number of Servings: ${servings}
 - Number of Days to Plan: ${days}
 
 [PILLAR 2: THE GUARDRAILS]
@@ -379,7 +381,7 @@
 - Pantry Inventory: ${pantry}
 - General Staples: ${general}
 
-Based on this data, please build a coordinated step-by-step meal plan and a structured grocery list categorized by store department. Track my macro/micro nutrients behind the scenes.`;
+When structuring the daily calendar, you must analyze the fresh ingredients required. Front-load meals using high-perishability items (like fresh berries, spinach, or cilantro) into the first few days, and push meals relying on hearty or frozen items to the tail end of the plan. Stop. Do NOT generate any recipes, grocery lists, or preparation blocks yet. Based on my form data, provide ONLY a numbered list of suggested meals distributed across a daily calendar (optimized by ingredient shelf-life). For each meal, give me a 1-sentence description and the primary ingredients used. Wait for my feedback.`;
 
         navigator.clipboard
           .writeText(outputText)
