@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Grocery & Meal Planning Form",
+  "type": "object",
+  "properties": {
+    "meals_needed": {
+      "title": "Pillar 1: Meals Needed (Select all that apply)",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["Breakfast", "Lunch", "Dinner"]
+      },
+      "attrs": { "format": "checkbox" }
+    },
+    "inspiration_source": {
+      "title": "Inspiration Source (Websites or URLs to base recipes on)",
+      "type": "string",
+      "attrs": { "placeholder": "e.g., https://example.com/recipe" }
+    },
+    "store_selection": {
+      "title": "Store Selection (Where are you shopping?)",
+      "type": "string",
+      "attrs": { "placeholder": "e.g., Publix, ALDI, Costco" }
+    },
+    "dietary_restrictions": {
+      "title": "Pillar 2: Dietary Restrictions & Avoidances",
+      "type": "string",
+      "attrs": {
+        "placeholder": "Allergies, medical needs, or strict 'what to avoid' items..."
+      }
+    },
+    "dietary_preferences": {
+      "title": "Dietary Preferences (Select all that apply)",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "High-Protein Focus",
+          "Low-Carb / Keto-Friendly",
+          "Heart-Healthy / Low-Sodium",
+          "High-Potassium Focus",
+          "High-Fiber Focus",
+          "Calorie-Conscious / Lean Choices",
+          "Whole Foods / Minimal Processing",
+          "Quick & Easy (under 30 mins)",
+          "Batch Cooking / Meal Prep Friendly",
+          "Budget-Conscious"
+        ]
+      },
+      "attrs": { "format": "checkbox" }
+    },
+    "cuisine_genres": {
+      "title": "Cuisine Genres (Select all that apply)",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "American Classic (burgers, roasts, Southern comfort)",
+          "Italian / Mediterranean (pastas, olive oil, Greek, seafood)",
+          "Mexican / Tex-Mex (tacos, fajitas, burrito bowls, spicy profiles)",
+          "East Asian (stir-fries, rice/noodle bowls, sweet & savory)",
+          "South Asian (curries, spiced stews)",
+          "Southeast Asian (fresh herbs, lime, Thai/Vietnamese styles)",
+          "Caribbean (jerk seasoning, tropical pairings)",
+          "Middle Eastern (shawarma, falafel, hummus, kebabs)",
+          "Fusion / 'Surprise Me' (creative combinations)"
+        ]
+      },
+      "attrs": { "format": "checkbox" }
+    },
+    "inventory_freezer": {
+      "title": "Pillar 3: Freezer Inventory",
+      "type": "string",
+      "attrs": {
+        "type": "textarea",
+        "placeholder": "What do you already have in the freezer?"
+      }
+    },
+    "inventory_fridge": {
+      "title": "Fridge Inventory",
+      "type": "string",
+      "attrs": {
+        "type": "textarea",
+        "placeholder": "What do you already have in the fridge?"
+      }
+    },
+    "inventory_pantry": {
+      "title": "Pantry Inventory",
+      "type": "string",
+      "attrs": {
+        "type": "textarea",
+        "placeholder": "What do you already have in the pantry?"
+      }
+    }
+  },
+  "required": ["meals_needed"]
+}
