@@ -302,21 +302,29 @@
         <label for="freezer">Freezer Contents</label>
         <textarea
           id="freezer"
-          placeholder="What's on hand in the freezer?"
+          placeholder="What's on hand in the freezer? Remember to input the amount you have plus the item e.g. 1lb of chicken."
         ></textarea>
       </div>
       <div class="form-group">
         <label for="fridge">Fridge Contents</label>
         <textarea
           id="fridge"
-          placeholder="What's on hand in the fridge?"
+          placeholder="What's on hand in the fridge? Remember to input the amount you have plus the item e.g. 1 cucumber."
         ></textarea>
       </div>
       <div class="form-group">
         <label for="pantry">Pantry Contents</label>
         <textarea
           id="pantry"
-          placeholder="What's on hand in the pantry?"
+          placeholder="What's on hand in the pantry? Remember to input the amount you have plus the item e.g. 1 can of corn."
+        ></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="general">General Staples</label>
+        <textarea
+          id="general"
+          placeholder="What do you need for the household, outside of meals?"
         ></textarea>
       </div>
     </div>
@@ -350,6 +358,7 @@
           document.getElementById("fridge").value || "Empty / nothing notable";
         const pantry =
           document.getElementById("pantry").value || "Empty / nothing notable";
+        const general = document.getElementById("general").value || "Empty / nothing notable";
 
         const outputText = `Please process my weekly grocery and meal planning setup data:
 
@@ -368,6 +377,7 @@
 - Freezer Inventory: ${freezer}
 - Fridge Inventory: ${fridge}
 - Pantry Inventory: ${pantry}
+- General Staples: ${general}
 
 Based on this data, please build a coordinated step-by-step meal plan and a structured grocery list categorized by store department. Track my macro/micro nutrients behind the scenes.`;
 
