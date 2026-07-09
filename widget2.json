@@ -23,13 +23,6 @@
       "type": "string",
       "attrs": { "placeholder": "e.g., Publix, ALDI, Costco" }
     },
-
-    "number_servings": {
-      "title": "Number of Servings per meal",
-      "type": "number",
-      "attrs": {"placeholder": "2-4"}
-    },
-
     "dietary_restrictions": {
       "title": "Pillar 2: Dietary Restrictions & Avoidances",
       "type": "string",
@@ -83,7 +76,7 @@
       "type": "string",
       "attrs": {
         "type": "textarea",
-        "placeholder": "What do you already have in the freezer? Remember to input the amount you have plus the item e.g. 1lb of chicken."
+        "placeholder": "What do you already have in the freezer?"
       }
     },
     "inventory_fridge": {
@@ -91,7 +84,7 @@
       "type": "string",
       "attrs": {
         "type": "textarea",
-        "placeholder": "What do you already have in the fridge? Remember to input the amount you have plus the item e.g. 1 cucumber."
+        "placeholder": "What do you already have in the fridge?"
       }
     },
     "inventory_pantry": {
@@ -99,15 +92,7 @@
       "type": "string",
       "attrs": {
         "type": "textarea",
-        "placeholder": "What do you already have in the pantry? Remember to input the amount you have plus the item e.g. 1 can of corn."
-      }
-    },
-    "staples_general": {
-      "title": "General Staples",
-      "type": "string",
-      "attrs": {
-        "type": "textarea",
-        "placeholder": "What do you need for the household, outside of meals?"
+        "placeholder": "What do you already have in the pantry?"
       }
     }
   },

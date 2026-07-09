@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meal & Grocery Planning Form</title>
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: #f4f6f8;
+        color: #333;
+        padding: 20px;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      h2 {
+        color: #2c3e50;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 8px;
+        margin-top: 0;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+      }
+      textarea {
+        height: 80px;
+        resize: vertical;
+      }
+      .checkbox-group {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 5px;
+      }
+      @media (min-width: 480px) {
+        .checkbox-group {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .checkbox-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 14px;
+      }
+      .checkbox-item input {
+        margin-top: 3px;
+      }
+      button {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: bold;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background-color: #219653;
+      }
+      .output-box {
+        display: none;
+        margin-top: 20px;
+        background: #eef9f1;
+        border: 1px solid #27ae60;
+        padding: 15px;
+        border-radius: 4px;
+        position: relative;
+      }
+      #copyNotice {
+        display: none;
+        color: #27ae60;
+        text-align: center;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; color: #2c3e50">
+      📋 Meal & Grocery Setup Tool
+    </h1>
+
+    <!-- PILLAR 1 -->
+    <div class="section">
+      <h2>Pillar 1: Scope & Goal</h2>
+      <div class="form-group">
+        <label>Meals Needed</label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" name="meals" value="Breakfast" /> Breakfast
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="meals" value="Lunch" /> Lunch
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="meals" value="Dinner" /> Dinner
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="urls">Recipe Inspiration Links / Websites</label>
+        <input
+          type="text"
+          id="urls"
+          placeholder="e.g., skinnytaste.com, pinchofyum.com"
+        />
+      </div>
+      <div class="form-group">
+        <label for="store">Grocery Store Preference</label>
+        <input
+          type="text"
+          id="store"
+          placeholder="e.g., Publix, ALDI, Costco"
+        />
+      </div>
+      <div class="form-group">
+        <label for="days">Number of Days to Plan</label>
+        <select
+          id="days"
+          style="
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+          "
+        >
+          <option value="3 Days">3 Days</option>
+          <option value="5 Days">5 Days</option>
+          <option value="7 Days">7 Days</option>
+          <option value="Custom / Full Week">Full Week (7 Days)</option>
+          <option value="Two Weeks">Two Weeks (14 Days)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PILLAR 2 -->
+    <div class="section">
+      <h2>Pillar 2: The Guardrails</h2>
+      <div class="form-group">
+        <label for="restrictions">Dietary Restrictions (What to avoid)</label>
+        <input
+          type="text"
+          id="restrictions"
+          placeholder="Allergies, specific ingredients to skip..."
+        />
+      </div>
+      <div class="form-group">
+        <label>Dietary Preferences</label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" name="prefs" value="High-Protein Focus" />
+            High-Protein Focus
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="prefs"
+              value="Low-Carb / Keto-Friendly"
+            />
+            Low-Carb / Keto
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="prefs"
+              value="Heart-Healthy / Low-Sodium"
+            />
+            Low-Sodium
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="prefs" value="High-Potassium Focus" />
+            High-Potassium
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="prefs" value="High-Fiber Focus" />
+            High-Fiber Focus
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="prefs"
+              value="Calorie-Conscious / Lean Choices"
+            />
+            Calorie-Conscious
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="prefs"
+              value="Whole Foods / Minimal Processing"
+            />
+            Whole Foods
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="prefs"
+              value="Quick & Easy (under 30 mins)"
+            />
+            Quick & Easy
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="prefs"
+              value="Batch Cooking / Meal Prep Friendly"
+            />
+            Meal Prep Friendly
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="prefs" value="Budget-Conscious" />
+            Budget-Conscious
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Cuisine Genres</label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" name="cuisines" value="American Classic" />
+            American Classic
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="cuisines"
+              value="Italian / Mediterranean"
+            />
+            Italian / Mediterranean
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="cuisines" value="Mexican / Tex-Mex" />
+            Mexican / Tex-Mex
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="cuisines" value="Cajiun" />
+            Cajiun
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="cuisines" value="East Asian" /> East
+            Asian (stir-fries, rice/noodle bowls, sweet & savory)
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="cuisines" value="South Asian" /> South
+            Asian (curries, spiced stews)
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="cuisines" value="Southeast Asian" />
+            Southeast Asian (fresh herbs, lime, Thai/Vietnamese styles)
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" name="cuisines" value="Middle Eastern" />
+            Middle Eastern (shawarma, falafel, hummus, kebabs)
+          </div>
+          <div class="checkbox-item">
+            <input
+              type="checkbox"
+              name="cuisines"
+              value="Fusion / Surprise Me"
+            />
+            Fusion / Surprise Me
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 3 -->
+    <div class="section">
+      <h2>Pillar 3: Current Inventory</h2>
+      <div class="form-group">
+        <label for="freezer">Freezer Contents</label>
+        <textarea
+          id="freezer"
+          placeholder="What's on hand in the freezer?"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="fridge">Fridge Contents</label>
+        <textarea
+          id="fridge"
+          placeholder="What's on hand in the fridge?"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="pantry">Pantry Contents</label>
+        <textarea
+          id="pantry"
+          placeholder="What's on hand in the pantry?"
+        ></textarea>
+      </div>
+    </div>
+
+    <button onclick="generatePrompt()">
+      Copy Completed Prompt to Clipboard
+    </button>
+    <div id="copyNotice">
+      ✓ Prompt copied to clipboard! Paste it directly into our chat window.
+    </div>
+
+    <script>
+      function generatePrompt() {
+        const getChecked = (name) =>
+          Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+            .map((el) => el.value)
+            .join(", ") || "None selected";
+
+        const meals = getChecked("meals");
+        const urls = document.getElementById("urls").value || "None specified";
+        const store =
+          document.getElementById("store").value || "Any local store";
+        const days = document.getElementById("days").value;
+        const restrictions =
+          document.getElementById("restrictions").value || "None";
+        const prefs = getChecked("prefs");
+        const cuisines = getChecked("cuisines");
+        const freezer =
+          document.getElementById("freezer").value || "Empty / nothing notable";
+        const fridge =
+          document.getElementById("fridge").value || "Empty / nothing notable";
+        const pantry =
+          document.getElementById("pantry").value || "Empty / nothing notable";
+
+        const outputText = `Please process my weekly grocery and meal planning setup data:
+
+[PILLAR 1: SCOPE & GOAL]
+- Meals Needed: ${meals}
+- Recipe Inspiration URLs: ${urls}
+- Grocery Store: ${store}
+- Number of Days to Plan: ${days}
+
+[PILLAR 2: THE GUARDRAILS]
+- Dietary Restrictions: ${restrictions}
+- Dietary Preferences: ${prefs}
+- Cuisine Genres: ${cuisines}
+
+[PILLAR 3: CURRENT INVENTORY]
+- Freezer Inventory: ${freezer}
+- Fridge Inventory: ${fridge}
+- Pantry Inventory: ${pantry}
+
+Based on this data, please build a coordinated step-by-step meal plan and a structured grocery list categorized by store department. Track my macro/micro nutrients behind the scenes.`;
+
+        navigator.clipboard
+          .writeText(outputText)
+          .then(() => {
+            const notice = document.getElementById("copyNotice");
+            notice.style.display = "block";
+            setTimeout(() => {
+              notice.style.display = "none";
+            }, 4000);
+          })
+          .catch((err) => {
+            alert(
+              "Failed to copy text automatically. Please check browser permissions.",
+            );
+          });
+      }
+    </script>
+  </body>
+</html>

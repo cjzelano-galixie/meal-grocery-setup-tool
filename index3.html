@@ -150,111 +150,6 @@
         font-weight: bold;
         line-height: 1.4;
       }
-
-      /* ============================================================
-         GEMINI CHAT ADDITIONS
-         An in-page alternative to the copy/paste flow. Reuses the
-         existing palette (green = primary/user, blue = secondary,
-         gray-blue = assistant) instead of introducing new colors.
-         ============================================================ */
-      #geminiConnection {
-        display: flex;
-        gap: 8px;
-        align-items: flex-start;
-      }
-      #geminiConnection input {
-        flex: 1;
-      }
-      #geminiConnection button {
-        width: auto;
-        white-space: nowrap;
-        margin-top: 0;
-      }
-      #geminiSetupStatus {
-        margin-top: 8px;
-        font-size: 13px;
-        font-weight: bold;
-      }
-
-      .chat-log {
-        max-height: 340px;
-        overflow-y: auto;
-        border: 1px solid #ecf0f1;
-        border-radius: 6px;
-        padding: 12px;
-        margin: 14px 0;
-        background: #fafbfc;
-      }
-      .chat-log:empty::before {
-        content: "Your conversation will appear here once you send the draft request.";
-        color: #95a5a6;
-        font-size: 13px;
-        font-style: italic;
-      }
-      .chat-bubble {
-        max-width: 88%;
-        padding: 8px 12px;
-        border-radius: 12px;
-        margin-bottom: 8px;
-        font-size: 14px;
-        line-height: 1.4;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-      }
-      .chat-bubble.user {
-        background: #27ae60;
-        color: white;
-        margin-left: auto;
-        border-bottom-right-radius: 2px;
-      }
-      .chat-bubble.user summary {
-        cursor: pointer;
-        font-weight: bold;
-      }
-      .chat-bubble.user pre {
-        white-space: pre-wrap;
-        font-size: 12px;
-        margin: 6px 0 0 0;
-        font-family: "SFMono-Regular", Consolas, Menlo, monospace;
-        opacity: 0.9;
-      }
-      .chat-bubble.model {
-        background: #eef1f4;
-        color: #2c3e50;
-        margin-right: auto;
-        border-bottom-left-radius: 2px;
-      }
-      .chat-bubble.system {
-        background: #fdf3e0;
-        color: #8a6d3b;
-        font-style: italic;
-        text-align: center;
-        max-width: 100%;
-        margin: 8px 0;
-      }
-
-      .chat-actions {
-        display: flex;
-        gap: 10px;
-      }
-      .chat-actions button {
-        margin-top: 0;
-      }
-
-      #chatFollowupRow {
-        display: flex;
-        gap: 8px;
-        margin-top: 10px;
-      }
-      #chatFollowupRow textarea {
-        height: 44px;
-        flex: 1;
-      }
-      #chatFollowupRow button {
-        width: auto;
-        white-space: nowrap;
-        margin-top: 0;
-      }
     </style>
   </head>
   <body>
@@ -510,62 +405,6 @@
     <div id="copyNotice"></div>
 
     <!-- ================================================================
-         GEMINI CHAT (alternative to the copy/paste flow above)
-         Runs the same two-step prompts, but sends them directly to
-         Gemini and shows the conversation in-page instead of asking
-         you to paste into an external AI chat. Calls a Google Apps
-         Script Web App you deploy yourself, which holds your Gemini
-         API key server-side — the key never touches this page's code.
-         Independent of the clipboard buttons above: using one path
-         doesn't affect the other.
-         ================================================================ -->
-    <div class="section" id="geminiChatSection">
-      <h2>💬 Chat with Gemini</h2>
-      <p class="bridge-help">
-        An alternative to copying prompts elsewhere — talk to Gemini right
-        here. One-time setup: deploy the companion Apps Script (see the
-        <code>apps-script-gemini-proxy.gs</code> file) and paste its Web
-        App URL below.
-      </p>
-
-      <div class="form-group">
-        <label for="appsScriptUrl">Apps Script Web App URL</label>
-        <div id="geminiConnection">
-          <input
-            type="text"
-            id="appsScriptUrl"
-            placeholder="https://script.google.com/macros/s/XXXXX/exec"
-          />
-          <button class="button-secondary" onclick="saveAppsScriptUrl()">
-            Save Connection
-          </button>
-        </div>
-        <div id="geminiSetupStatus"></div>
-      </div>
-
-      <div id="chatLog" class="chat-log" aria-live="polite"></div>
-
-      <div class="chat-actions">
-        <button id="chatBtnDraft" class="button-secondary" onclick="sendDraftToGemini()">
-          Send Draft to Gemini
-        </button>
-        <button id="chatBtnCompile" class="button-secondary" onclick="sendCompileToGemini()" disabled>
-          Send Compile Request
-        </button>
-      </div>
-
-      <div id="chatFollowupRow">
-        <textarea
-          id="chatFollowup"
-          placeholder="Optional: send feedback before compiling, e.g. 'swap Tuesday's dinner for something with chicken thighs'"
-        ></textarea>
-        <button class="button-secondary" onclick="sendFollowupToGemini()">
-          Send
-        </button>
-      </div>
-    </div>
-
-    <!-- ================================================================
          CHROME EXTENSION DATA BRIDGE (Part 2 of the bridge)
          Hidden until "Compile Full Plan" is used. Button 2's copied prompt
          asks the AI to end its response with a fenced JSON code block
@@ -685,14 +524,14 @@
       }
 
       /* ================================================================
-         PROMPT BUILDERS
-         Pulled out as standalone functions so the clipboard buttons
-         AND the Gemini chat buttons build the exact same prompt text
-         from one source of truth — no risk of the two paths drifting
-         apart as the prompts get edited later.
+         BUTTON 1: "Generate Menu Draft"
+         Copies a prompt that commands the AI to STOP after producing a
+         14-meal draft calendar — no recipes, no grocery list yet.
          ================================================================ */
-      function buildDraftPrompt(d) {
-        return `Please process my weekly grocery and meal planning setup data. This is STEP 1 of a two-step planning process.
+      function generateMenuDraft() {
+        const d = collectFormData();
+
+        const draftPrompt = `Please process my weekly grocery and meal planning setup data. This is STEP 1 of a two-step planning process.
 
 [PILLAR 1: SCOPE & GOAL]
 - Meals Needed: ${d.meals}
@@ -718,37 +557,6 @@ When structuring the daily calendar, analyze the fresh ingredients required. Fro
 Provide ONLY a numbered list of 14 suggested meals distributed across a daily calendar, optimized by ingredient shelf-life based on perishability guidance. For each meal, give a 1-sentence description and the primary ingredients used.
 
 Stop. Do NOT generate any recipes, grocery lists, or preparation blocks yet. Wait for my feedback.`;
-      }
-
-      function buildCompilePrompt() {
-        return `STEP 2 OF 2 — FINAL COMPILE
-
-My menu draft is approved. Execute the final plan. Generate the complete step-by-step recipes, full preparation time blocks, and a structured grocery list. Crucially, calculate and display the macro/micro nutrient breakdown for every meal option, explicitly showing: Protein (g), Carbs (g), Fat (g), Fiber (g), Sodium (mg), and Potassium (mg).
-
-ADDITIONAL OUTPUT REQUIREMENT — GROCERY DATA EXPORT:
-After the human-readable grocery list, add one final section titled "GROCERY_JSON_EXPORT" containing ONLY a single fenced JSON code block (no extra commentary inside the code block). Consolidate duplicate ingredients across all meals into one line item with a combined quantity. The array must contain one object per grocery item using exactly this structure and these keys:
-
-[
-  {
-    "search_term": "Clean String of Ingredient Name",
-    "quantity_needed": 0.0,
-    "unit_type": "lbs/pack/can/etc",
-    "store_department": "Meat/Produce/Dairy/Pantry",
-    "budget_preference": "cheapest_available"
-  }
-]
-
-I will paste that JSON block back into my planning tool to sync with my grocery shopping Chrome Extension.`;
-      }
-
-      /* ================================================================
-         BUTTON 1: "Generate Menu Draft"
-         Copies a prompt that commands the AI to STOP after producing a
-         14-meal draft calendar — no recipes, no grocery list yet.
-         ================================================================ */
-      function generateMenuDraft() {
-        const d = collectFormData();
-        const draftPrompt = buildDraftPrompt(d);
 
         copyToClipboard(draftPrompt, () => {
           showNotice(
@@ -768,7 +576,24 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
          first half of the Chrome Extension data bridge.
          ================================================================ */
       function compileFullPlan() {
-        const compilePrompt = buildCompilePrompt();
+        const compilePrompt = `STEP 2 OF 2 — FINAL COMPILE
+
+My menu draft is approved. Execute the final plan. Generate the complete step-by-step recipes, full preparation time blocks, and a structured grocery list. Crucially, calculate and display the macro/micro nutrient breakdown for every meal option, explicitly showing: Protein (g), Carbs (g), Fat (g), Fiber (g), Sodium (mg), and Potassium (mg).
+
+ADDITIONAL OUTPUT REQUIREMENT — GROCERY DATA EXPORT:
+After the human-readable grocery list, add one final section titled "GROCERY_JSON_EXPORT" containing ONLY a single fenced JSON code block (no extra commentary inside the code block). Consolidate duplicate ingredients across all meals into one line item with a combined quantity. The array must contain one object per grocery item using exactly this structure and these keys:
+
+[
+  {
+    "search_term": "Clean String of Ingredient Name",
+    "quantity_needed": 0.0,
+    "unit_type": "lbs/pack/can/etc",
+    "store_department": "Meat/Produce/Dairy/Pantry",
+    "budget_preference": "cheapest_available"
+  }
+]
+
+I will paste that JSON block back into my planning tool to sync with my grocery shopping Chrome Extension.`;
 
         copyToClipboard(compilePrompt, () => {
           showNotice(
@@ -800,28 +625,32 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
         "store_department",
       ]; // budget_preference is defaulted below rather than required
 
-      // Shared validator: parses + cleans a raw JSON string against the
-      // extension's schema, and persists it (localStorage + hidden DOM
-      // node) on success. Used by BOTH the manual paste-back textarea
-      // and the chat's auto-extraction, so there's exactly one place
-      // that defines what counts as a valid grocery item.
-      function processGroceryJson(raw) {
-        if (!raw || !raw.trim()) {
-          return { ok: false, error: "No JSON provided." };
+      function saveGroceryData() {
+        const raw = document.getElementById("groceryJsonInput").value.trim();
+        const statusEl = document.getElementById("groceryStatus");
+
+        if (!raw) {
+          statusEl.style.color = "#e74c3c";
+          statusEl.textContent =
+            "⚠ Paste the JSON grocery list from the AI's GROCERY_JSON_EXPORT section first.";
+          return;
         }
 
         let parsed;
         try {
           parsed = JSON.parse(raw);
         } catch (err) {
-          return { ok: false, error: "That's not valid JSON." };
+          statusEl.style.color = "#e74c3c";
+          statusEl.textContent =
+            "⚠ That's not valid JSON. Copy the exact fenced code block from the AI's response, with no extra text.";
+          return;
         }
 
         if (!Array.isArray(parsed)) {
-          return {
-            ok: false,
-            error: "Expected a JSON array of grocery items, not a single object.",
-          };
+          statusEl.style.color = "#e74c3c";
+          statusEl.textContent =
+            "⚠ Expected a JSON array of grocery items (starting with '['), not a single object.";
+          return;
         }
 
         const cleaned = [];
@@ -847,10 +676,10 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
         });
 
         if (cleaned.length === 0) {
-          return {
-            ok: false,
-            error: "No valid items found. " + problems.join(" "),
-          };
+          statusEl.style.color = "#e74c3c";
+          statusEl.innerHTML =
+            "⚠ No valid items found.<br>" + problems.join("<br>");
+          return;
         }
 
         // Persist for the Chrome Extension — both storage paths in sync.
@@ -858,243 +687,27 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
         document.getElementById("groceryDataStore").textContent =
           JSON.stringify(cleaned);
 
-        return { ok: true, count: cleaned.length, skipped: problems, items: cleaned };
-      }
-
-      function saveGroceryData() {
-        const raw = document.getElementById("groceryJsonInput").value.trim();
-        const statusEl = document.getElementById("groceryStatus");
-        const result = processGroceryJson(raw);
-
-        if (!result.ok) {
-          statusEl.style.color = "#e74c3c";
-          statusEl.textContent = "⚠ " + result.error;
-          return;
-        }
-
-        const summary = `✓ Saved ${result.count} grocery item(s) — ready for the Chrome Extension.`;
-        if (result.skipped.length) {
+        const summary = `✓ Saved ${cleaned.length} grocery item(s) — ready for the Chrome Extension.`;
+        if (problems.length) {
           statusEl.style.color = "#e67e22";
           statusEl.innerHTML =
             summary +
-            `<br>⚠ ${result.skipped.length} item(s) skipped:<br>` +
-            result.skipped.join("<br>");
+            `<br>⚠ ${problems.length} item(s) skipped:<br>` +
+            problems.join("<br>");
         } else {
           statusEl.style.color = "#27ae60";
           statusEl.textContent = summary;
         }
       }
 
-      /* ================================================================
-         GEMINI CHAT (alternative path to the copy/paste flow)
-         Sends the same buildDraftPrompt()/buildCompilePrompt() text
-         directly to a Google Apps Script Web App you deploy yourself
-         (see apps-script-gemini-proxy.gs). The Script holds the Gemini
-         API key server-side, so it's never present in this page's code
-         or network requests from the browser.
-         ================================================================ */
-      const APPS_SCRIPT_URL_KEY = "mealPlanner_appsScriptUrl";
-      let chatHistory = []; // [{ role: "user" | "model", text: "..." }]
-      let chatHasDraftReply = false;
-
-      function saveAppsScriptUrl() {
-        const url = document.getElementById("appsScriptUrl").value.trim();
-        const statusEl = document.getElementById("geminiSetupStatus");
-
-        if (!url || !url.startsWith("https://script.google.com/")) {
-          statusEl.style.color = "#e74c3c";
-          statusEl.textContent =
-            "⚠ That doesn't look like an Apps Script Web App URL (should start with https://script.google.com/macros/s/.../exec).";
-          return;
-        }
-
-        localStorage.setItem(APPS_SCRIPT_URL_KEY, url);
-        statusEl.style.color = "#27ae60";
-        statusEl.textContent = "✓ Connection saved.";
-      }
-
-      // Sends the full conversation so far to the Apps Script proxy and
-      // returns Gemini's reply text (or throws with a readable message).
-      async function callGemini(history) {
-        const url = localStorage.getItem(APPS_SCRIPT_URL_KEY);
-        if (!url) {
-          throw new Error(
-            "No Apps Script Web App URL saved yet — add it above first.",
-          );
-        }
-
-        const response = await fetch(url, {
-          method: "POST",
-          // text/plain avoids a CORS preflight OPTIONS request, which
-          // Apps Script Web Apps don't handle. The Script still reads
-          // the raw body via e.postData.contents and JSON.parses it
-          // manually, regardless of this header's value.
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ history }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`Apps Script responded with HTTP ${response.status}.`);
-        }
-
-        const data = await response.json();
-        if (data.error) {
-          throw new Error(data.error);
-        }
-        return data.reply;
-      }
-
-      function setChatButtonsBusy(busy) {
-        document.getElementById("chatBtnDraft").disabled = busy;
-        document.getElementById("chatBtnCompile").disabled =
-          busy || !chatHasDraftReply;
-      }
-
-      // Long prompts (the full Pillar 1/2/3 data dump) are shown
-      // collapsed behind <details> so the chat log stays scannable;
-      // short follow-up messages just render directly.
-      function appendUserPromptBubble(summaryLabel, fullText) {
-        const log = document.getElementById("chatLog");
-        const bubble = document.createElement("div");
-        bubble.className = "chat-bubble user";
-        const details = document.createElement("details");
-        const summary = document.createElement("summary");
-        summary.textContent = summaryLabel;
-        const pre = document.createElement("pre");
-        pre.textContent = fullText;
-        details.appendChild(summary);
-        details.appendChild(pre);
-        bubble.appendChild(details);
-        log.appendChild(bubble);
-        log.scrollTop = log.scrollHeight;
-      }
-
-      function appendChatBubble(role, text) {
-        const log = document.getElementById("chatLog");
-        const bubble = document.createElement("div");
-        bubble.className = `chat-bubble ${role}`;
-        bubble.textContent = text;
-        log.appendChild(bubble);
-        log.scrollTop = log.scrollHeight;
-        return bubble;
-      }
-
-      // Shows a "…thinking" placeholder, calls Gemini, then swaps the
-      // placeholder for the real reply (or a system-style error bubble).
-      async function runGeminiTurn() {
-        const loading = appendChatBubble("model", "…thinking");
-        setChatButtonsBusy(true);
-        try {
-          const reply = await callGemini(chatHistory);
-          chatHistory.push({ role: "model", text: reply });
-          loading.remove();
-          appendChatBubble("model", reply);
-          return reply;
-        } catch (err) {
-          loading.remove();
-          appendChatBubble("system", "⚠ " + err.message);
-          return null;
-        } finally {
-          setChatButtonsBusy(false);
-        }
-      }
-
-      async function sendDraftToGemini() {
-        const d = collectFormData();
-        const draftPrompt = buildDraftPrompt(d);
-        chatHistory = [{ role: "user", text: draftPrompt }];
-        appendUserPromptBubble(
-          "📋 Sent Step 1 setup & draft request (tap to view full prompt)",
-          draftPrompt,
-        );
-        const reply = await runGeminiTurn();
-        if (reply) {
-          chatHasDraftReply = true;
-          document.getElementById("chatBtnCompile").disabled = false;
-        }
-      }
-
-      async function sendFollowupToGemini() {
-        const box = document.getElementById("chatFollowup");
-        const text = box.value.trim();
-        if (!text) return;
-
-        if (chatHistory.length === 0) {
-          appendChatBubble(
-            "system",
-            '⚠ Start with "Send Draft to Gemini" first so there\'s a conversation to add to.',
-          );
-          return;
-        }
-
-        chatHistory.push({ role: "user", text });
-        appendChatBubble("user", text);
-        box.value = "";
-        await runGeminiTurn();
-      }
-
-      async function sendCompileToGemini() {
-        const compilePrompt = buildCompilePrompt();
-        chatHistory.push({ role: "user", text: compilePrompt });
-        appendUserPromptBubble(
-          "✅ Sent Step 2 compile request (tap to view full prompt)",
-          compilePrompt,
-        );
-        const reply = await runGeminiTurn();
-        if (reply) {
-          tryAutoExtractGroceryJson(reply);
-        }
-      }
-
-      // Looks for a fenced code block in the reply and tries to parse
-      // it as the grocery JSON array. Models don't always keep the
-      // "GROCERY_JSON_EXPORT" label verbatim, so this just tries every
-      // fenced block (last one first, since the export is requested
-      // last) rather than searching for that exact heading text.
-      function tryAutoExtractGroceryJson(replyText) {
-        const fenceMatches = [...replyText.matchAll(/```(?:json)?\s*([\s\S]*?)```/g)];
-
-        for (let i = fenceMatches.length - 1; i >= 0; i--) {
-          const candidate = fenceMatches[i][1].trim();
-          const result = processGroceryJson(candidate);
-          if (result.ok) {
-            document.getElementById("groceryBridge").style.display = "block";
-            document.getElementById("groceryJsonInput").value = JSON.stringify(
-              result.items,
-              null,
-              2,
-            );
-            const statusEl = document.getElementById("groceryStatus");
-            statusEl.style.color = "#27ae60";
-            statusEl.textContent = `✓ Auto-saved ${result.count} grocery item(s) from the chat reply — ready for the Chrome Extension.`;
-            appendChatBubble(
-              "system",
-              `🛒 Auto-detected and saved ${result.count} grocery item(s) for the Chrome Extension.`,
-            );
-            return;
-          }
-        }
-
-        // No fenced block parsed cleanly — reveal the bridge panel so
-        // the paste-back path is right there as a manual fallback.
-        document.getElementById("groceryBridge").style.display = "block";
-        appendChatBubble(
-          "system",
-          "ℹ Couldn't auto-detect a valid grocery JSON block in that reply. Scroll down to paste it manually into Sync Grocery Data.",
-        );
-      }
-
-      // On load: re-hydrate the hidden grocery DOM node from
-      // localStorage, and prefill the Apps Script URL field if one was
-      // saved in a previous session.
+      // On load, re-hydrate the hidden DOM data node from localStorage
+      // (if a list was saved in a previous session) so the extension
+      // always has a consistent source to read from as soon as the
+      // page renders, not just right after a save.
       window.addEventListener("DOMContentLoaded", () => {
-        const savedGroceries = localStorage.getItem(GROCERY_STORAGE_KEY);
-        if (savedGroceries) {
-          document.getElementById("groceryDataStore").textContent = savedGroceries;
-        }
-        const savedUrl = localStorage.getItem(APPS_SCRIPT_URL_KEY);
-        if (savedUrl) {
-          document.getElementById("appsScriptUrl").value = savedUrl;
+        const saved = localStorage.getItem(GROCERY_STORAGE_KEY);
+        if (saved) {
+          document.getElementById("groceryDataStore").textContent = saved;
         }
       });
     </script>
