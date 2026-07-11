@@ -8,142 +8,191 @@
       body {
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        background-color: #f4f6f8;
-        color: #333;
+
+        /* BACKGROUND IMAGE PLACEHOLDER */
+        background-color: #eef3f0; /* Soft sage fallback color */
+        background-image: url("/transparent-image.png"); /* Your static Canva background */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+
+        color: #2c4035; /* Deep green/grey for text */
         padding: 20px;
         max-width: 700px;
         margin: 0 auto;
       }
+
       .section {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
+        background: rgba(
+          255,
+          255,
+          255,
+          0.92
+        ); /* Slight transparency to let background peek through */
+        padding: 24px;
+        border-radius: 12px; /* Softer, cuter edges */
         margin-bottom: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border-top: 6px solid #6b9e7d; /* Sage green accent at the top of sections */
       }
+
+      h1,
       h2 {
-        color: #2c3e50;
-        border-bottom: 2px solid #ecf0f1;
+        color: #1f5f5b; /* Dark Teal */
+      }
+
+      h2 {
+        border-bottom: 2px solid #dbe7e1;
         padding-bottom: 8px;
         margin-top: 0;
       }
+
       .form-group {
         margin-bottom: 15px;
       }
+
       label {
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
+        color: #2c4035;
       }
+
       input[type="text"],
+      input[type="number"],
+      select,
       textarea {
         width: 100%;
         padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        border: 1px solid #b2c9be; /* Soft sage border */
+        border-radius: 6px;
         box-sizing: border-box;
         font-size: 14px;
+        background-color: #fcfdfd;
+        color: #2c4035;
       }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #3aafa9; /* Teal focus */
+        box-shadow: 0 0 5px rgba(58, 175, 169, 0.3);
+      }
+
       textarea {
         height: 80px;
         resize: vertical;
       }
+
       .checkbox-group {
         display: grid;
         grid-template-columns: 1fr;
         gap: 8px;
         margin-top: 5px;
       }
+
       @media (min-width: 480px) {
         .checkbox-group {
           grid-template-columns: 1fr 1fr;
         }
       }
+
       .checkbox-item {
         display: flex;
         align-items: flex-start;
         gap: 8px;
         font-size: 14px;
+        color: #3a5043;
       }
+
       .checkbox-item input {
         margin-top: 3px;
+        accent-color: #3aafa9; /* Teal checkboxes */
       }
+
       button {
-        background-color: #27ae60;
+        background-color: #3aafa9; /* Teal Primary */
         color: white;
         border: none;
         padding: 12px 20px;
         font-size: 16px;
-        border-radius: 4px;
+        border-radius: 8px; /* Cuter rounded buttons */
         cursor: pointer;
         width: 100%;
         font-weight: bold;
-        transition: background 0.2s;
+        transition: all 0.2s ease-in-out;
       }
+
       button:hover {
-        background-color: #219653;
+        background-color: #2b7a78; /* Darker Teal */
+        transform: translateY(-1px);
       }
+
       .output-box {
         display: none;
         margin-top: 20px;
         background: #eef9f1;
-        border: 1px solid #27ae60;
+        border: 1px solid #3aafa9;
         padding: 15px;
-        border-radius: 4px;
+        border-radius: 8px;
         position: relative;
       }
+
       #copyNotice {
         display: none;
-        color: #27ae60;
+        color: #3aafa9;
         text-align: center;
         margin-top: 10px;
         font-weight: bold;
       }
 
       /* ============================================================
-         TWO-BUTTON WORKFLOW ADDITIONS (new rules only — nothing
-         above this comment was changed, so existing look/feel and
-         responsive behavior are untouched).
+         TWO-BUTTON WORKFLOW ADDITIONS
          ============================================================ */
-
-      /* Small helper line above the action buttons explaining the flow */
       .workflow-hint {
         text-align: center;
         font-size: 13px;
-        color: #7f8c8d;
+        color: #6b9e7d; /* Sage text */
         margin: 0 0 10px 0;
       }
 
-      /* Button 2 ("Compile Full Plan") gets its own color so it's
-         visually distinct from Button 1 while it's active. */
       button.button-secondary {
-        background-color: #2980b9;
+        background-color: #6b9e7d; /* Sage Secondary */
         margin-top: 10px;
       }
+
       button.button-secondary:hover {
-        background-color: #21618c;
+        background-color: #557a72;
       }
 
-      /* Disabled state for Button 2 before Button 1 has been used */
       button:disabled,
       button:disabled:hover {
-        background-color: #bdc3c7;
+        background-color: #d1dcd7; /* Soft disabled grey-green */
+        color: #92a89d;
         cursor: not-allowed;
         opacity: 0.8;
+        transform: none;
       }
 
-      /* Grocery → Chrome Extension bridge panel (hidden until Step 2 runs) */
+      /* ============================================================
+         GROCERY BRIDGE ADDITIONS
+         ============================================================ */
       #groceryBridge p.bridge-help {
         font-size: 13px;
-        color: #555;
+        color: #4f6a5b;
         margin-top: -8px;
         line-height: 1.4;
       }
+
       #groceryJsonInput {
         height: 130px;
         font-family: "SFMono-Regular", Consolas, Menlo, monospace;
         font-size: 12px;
+        background-color: #f4f8f6;
       }
+
       #groceryStatus {
         margin-top: 10px;
         font-size: 14px;
@@ -153,23 +202,23 @@
 
       /* ============================================================
          GEMINI CHAT ADDITIONS
-         An in-page alternative to the copy/paste flow. Reuses the
-         existing palette (green = primary/user, blue = secondary,
-         gray-blue = assistant) instead of introducing new colors.
          ============================================================ */
       #geminiConnection {
         display: flex;
         gap: 8px;
         align-items: flex-start;
       }
+
       #geminiConnection input {
         flex: 1;
       }
+
       #geminiConnection button {
         width: auto;
         white-space: nowrap;
         margin-top: 0;
       }
+
       #geminiSetupStatus {
         margin-top: 8px;
         font-size: 13px;
@@ -179,38 +228,43 @@
       .chat-log {
         max-height: 340px;
         overflow-y: auto;
-        border: 1px solid #ecf0f1;
-        border-radius: 6px;
+        border: 1px solid #dbe7e1;
+        border-radius: 8px;
         padding: 12px;
         margin: 14px 0;
-        background: #fafbfc;
+        background: #fcfdfd;
       }
+
       .chat-log:empty::before {
         content: "Your conversation will appear here once you send the draft request.";
-        color: #95a5a6;
+        color: #8da698;
         font-size: 13px;
         font-style: italic;
       }
+
       .chat-bubble {
         max-width: 88%;
-        padding: 8px 12px;
-        border-radius: 12px;
+        padding: 10px 14px;
+        border-radius: 14px; /* Cuter chat bubbles */
         margin-bottom: 8px;
         font-size: 14px;
         line-height: 1.4;
         white-space: pre-wrap;
         word-wrap: break-word;
       }
+
       .chat-bubble.user {
-        background: #27ae60;
+        background: #3aafa9; /* Teal user bubble */
         color: white;
         margin-left: auto;
-        border-bottom-right-radius: 2px;
+        border-bottom-right-radius: 4px;
       }
+
       .chat-bubble.user summary {
         cursor: pointer;
         font-weight: bold;
       }
+
       .chat-bubble.user pre {
         white-space: pre-wrap;
         font-size: 12px;
@@ -218,15 +272,17 @@
         font-family: "SFMono-Regular", Consolas, Menlo, monospace;
         opacity: 0.9;
       }
+
       .chat-bubble.model {
-        background: #eef1f4;
-        color: #2c3e50;
+        background: #dbe7e1; /* Sage model bubble */
+        color: #1f5f5b;
         margin-right: auto;
-        border-bottom-left-radius: 2px;
+        border-bottom-left-radius: 4px;
       }
+
       .chat-bubble.system {
-        background: #fdf3e0;
-        color: #8a6d3b;
+        background: #eef3f0; /* Ultra-light sage system notice (no beige) */
+        color: #4f6a5b;
         font-style: italic;
         text-align: center;
         max-width: 100%;
@@ -237,6 +293,7 @@
         display: flex;
         gap: 10px;
       }
+
       .chat-actions button {
         margin-top: 0;
       }
@@ -246,10 +303,12 @@
         gap: 8px;
         margin-top: 10px;
       }
+
       #chatFollowupRow textarea {
         height: 44px;
         flex: 1;
       }
+
       #chatFollowupRow button {
         width: auto;
         white-space: nowrap;
@@ -258,13 +317,11 @@
     </style>
   </head>
   <body>
-    <h1 style="text-align: center; color: #2c3e50">
-      📋 Meal & Grocery Setup Tool
-    </h1>
+    <h1 style="text-align: center">📋 Meal & Grocery Form</h1>
 
     <!-- PILLAR 1 -->
     <div class="section">
-      <h2>Pillar 1: Scope & Goal</h2>
+      <h2>Essentials</h2>
       <div class="form-group">
         <label>Meals Needed</label>
         <div class="checkbox-group">
@@ -297,7 +354,7 @@
       </div>
       <div class="form-group">
         <label for="servings">Number of Servings per meal</label>
-        <input type="number" id="servings" placeholder="4" value="4"/>
+        <input type="number" id="servings" placeholder="4" value="4" />
       </div>
       <div class="form-group">
         <label for="days">Number of Days to Plan</label>
@@ -314,7 +371,7 @@
           <option value="3 Days">3 Days</option>
           <option value="5 Days">5 Days</option>
           <option value="7 Days">7 Days</option>
-          <option value="Custom / Full Week">Full Week (7 Days)</option>
+          <option value="Full Week">Full Week (7 Days)</option>
           <option value="Two Weeks">Two Weeks (14 Days)</option>
         </select>
       </div>
@@ -322,7 +379,7 @@
 
     <!-- PILLAR 2 -->
     <div class="section">
-      <h2>Pillar 2: The Guardrails</h2>
+      <h2>Inclinations</h2>
       <div class="form-group">
         <label for="restrictions">Dietary Restrictions (What to avoid)</label>
         <input
@@ -420,8 +477,8 @@
             Mexican / Tex-Mex
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" name="cuisines" value="Cajiun" />
-            Cajiun
+            <input type="checkbox" name="cuisines" value="Cajun" />
+            Cajun
           </div>
           <div class="checkbox-item">
             <input type="checkbox" name="cuisines" value="East Asian" /> East
@@ -453,37 +510,36 @@
 
     <!-- PILLAR 3 -->
     <div class="section">
-      <h2>Pillar 3: Current Inventory</h2>
+      <h2>Reserves</h2>
       <div class="form-group">
-        <label for="freezer">Freezer Contents</label>
+        <label for="freezer">Freezer Reserves</label>
         <textarea
           id="freezer"
           placeholder="What's on hand in the freezer? Remember to input the amount you have plus the item e.g. 1lb of chicken."
         ></textarea>
       </div>
       <div class="form-group">
-        <label for="fridge">Fridge Contents</label>
+        <label for="fridge">Fridge Reserves</label>
         <textarea
           id="fridge"
           placeholder="What's on hand in the fridge? Remember to input the amount you have plus the item e.g. 1 cucumber."
         ></textarea>
       </div>
       <div class="form-group">
-        <label for="pantry">Pantry Contents</label>
+        <label for="pantry">Pantry Reserves</label>
         <textarea
           id="pantry"
           placeholder="What's on hand in the pantry? Remember to input the amount you have plus the item e.g. 1 can of corn."
         ></textarea>
       </div>
       <div class="form-group">
-        <label for="general">General Staples</label>
+        <label for="general">General Necessities</label>
         <textarea
           id="general"
           placeholder="What do you need for the household, outside of meals?"
         ></textarea>
       </div>
     </div>
-    
 
     <!-- ================================================================
          TWO-BUTTON WORKFLOW
@@ -501,7 +557,12 @@
     <button id="btnDraft" onclick="generateMenuDraft()">
       Generate Menu Draft
     </button>
-    <button id="btnCompile" class="button-secondary" onclick="compileFullPlan()" disabled>
+    <button
+      id="btnCompile"
+      class="button-secondary"
+      onclick="compileFullPlan()"
+      disabled
+    >
       Compile Full Plan
     </button>
 
@@ -522,10 +583,10 @@
     <div class="section" id="geminiChatSection">
       <h2>💬 Chat with Gemini</h2>
       <p class="bridge-help">
-        An alternative to copying prompts elsewhere — talk to Gemini right
-        here. One-time setup: deploy the companion Apps Script (see the
-        <code>apps-script-gemini-proxy.gs</code> file) and paste its Web
-        App URL below.
+        An alternative to copying prompts elsewhere — talk to Gemini right here.
+        One-time setup: deploy the companion Apps Script (see the
+        <code>apps-script-gemini-proxy.gs</code> file) and paste its Web App URL
+        below.
       </p>
 
       <div class="form-group">
@@ -546,10 +607,19 @@
       <div id="chatLog" class="chat-log" aria-live="polite"></div>
 
       <div class="chat-actions">
-        <button id="chatBtnDraft" class="button-secondary" onclick="sendDraftToGemini()">
+        <button
+          id="chatBtnDraft"
+          class="button-secondary"
+          onclick="sendDraftToGemini()"
+        >
           Send Draft to Gemini
         </button>
-        <button id="chatBtnCompile" class="button-secondary" onclick="sendCompileToGemini()" disabled>
+        <button
+          id="chatBtnCompile"
+          class="button-secondary"
+          onclick="sendCompileToGemini()"
+          disabled
+        >
           Send Compile Request
         </button>
       </div>
@@ -575,10 +645,10 @@
     <div class="section" id="groceryBridge" style="display: none">
       <h2>🛒 Sync Grocery Data</h2>
       <p class="bridge-help">
-        After the AI generates your full plan, copy the JSON code block from
-        its <strong>GROCERY_JSON_EXPORT</strong> section and paste it below.
-        This saves a structured grocery list that the companion Chrome
-        Extension will read to auto-fill your cart.
+        After the AI generates your full plan, copy the JSON code block from its
+        <strong>GROCERY_JSON_EXPORT</strong> section and paste it below. This
+        saves a structured grocery list that the companion Chrome Extension will
+        read to auto-fill your cart.
       </p>
       <div class="form-group">
         <label for="groceryJsonInput">Paste Grocery JSON Here</label>
@@ -606,7 +676,9 @@
          for a Chrome Extension content script to read via
          document.getElementById('groceryDataStore').textContent and
          JSON.parse(). It's kept in sync with localStorage below. -->
-    <script type="application/json" id="groceryDataStore">[]</script>
+    <script type="application/json" id="groceryDataStore">
+      []
+    </script>
 
     <script>
       /* ================================================================
@@ -620,9 +692,7 @@
       // if more fields are added later.
       function collectFormData() {
         const getChecked = (name) =>
-          Array.from(
-            document.querySelectorAll(`input[name="${name}"]:checked`),
-          )
+          Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
             .map((el) => el.value)
             .join(", ") || "None selected";
 
@@ -633,8 +703,7 @@
           servings:
             document.getElementById("servings").value || "None specified",
           days: document.getElementById("days").value,
-          restrictions:
-            document.getElementById("restrictions").value || "None",
+          restrictions: document.getElementById("restrictions").value || "None",
           prefs: getChecked("prefs"),
           cuisines: getChecked("cuisines"),
           freezer:
@@ -820,7 +889,8 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
         if (!Array.isArray(parsed)) {
           return {
             ok: false,
-            error: "Expected a JSON array of grocery items, not a single object.",
+            error:
+              "Expected a JSON array of grocery items, not a single object.",
           };
         }
 
@@ -858,7 +928,12 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
         document.getElementById("groceryDataStore").textContent =
           JSON.stringify(cleaned);
 
-        return { ok: true, count: cleaned.length, skipped: problems, items: cleaned };
+        return {
+          ok: true,
+          count: cleaned.length,
+          skipped: problems,
+          items: cleaned,
+        };
       }
 
       function saveGroceryData() {
@@ -934,7 +1009,9 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
         });
 
         if (!response.ok) {
-          throw new Error(`Apps Script responded with HTTP ${response.status}.`);
+          throw new Error(
+            `Apps Script responded with HTTP ${response.status}.`,
+          );
         }
 
         const data = await response.json();
@@ -1052,7 +1129,9 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
       // fenced block (last one first, since the export is requested
       // last) rather than searching for that exact heading text.
       function tryAutoExtractGroceryJson(replyText) {
-        const fenceMatches = [...replyText.matchAll(/```(?:json)?\s*([\s\S]*?)```/g)];
+        const fenceMatches = [
+          ...replyText.matchAll(/```(?:json)?\s*([\s\S]*?)```/g),
+        ];
 
         for (let i = fenceMatches.length - 1; i >= 0; i--) {
           const candidate = fenceMatches[i][1].trim();
@@ -1090,7 +1169,8 @@ I will paste that JSON block back into my planning tool to sync with my grocery 
       window.addEventListener("DOMContentLoaded", () => {
         const savedGroceries = localStorage.getItem(GROCERY_STORAGE_KEY);
         if (savedGroceries) {
-          document.getElementById("groceryDataStore").textContent = savedGroceries;
+          document.getElementById("groceryDataStore").textContent =
+            savedGroceries;
         }
         const savedUrl = localStorage.getItem(APPS_SCRIPT_URL_KEY);
         if (savedUrl) {

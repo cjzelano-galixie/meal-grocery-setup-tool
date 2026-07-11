@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Meal Planner Grocery Cart Filler",
+  "version": "0.1.0",
+  "description": "Reads your saved grocery list from the meal planner and helps fill your ALDI pickup cart.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Grocery Cart Filler"
+  },
+  "permissions": ["activeTab", "scripting", "storage"]
+}

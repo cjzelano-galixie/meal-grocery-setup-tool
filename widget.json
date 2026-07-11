@@ -27,7 +27,7 @@
     "number_servings": {
       "title": "Number of Servings per meal",
       "type": "number",
-      "attrs": {"placeholder": "2-4"}
+      "attrs": { "placeholder": "2-4" }
     },
 
     "dietary_restrictions": {
@@ -71,7 +71,7 @@
           "East Asian (stir-fries, rice/noodle bowls, sweet & savory)",
           "South Asian (curries, spiced stews)",
           "Southeast Asian (fresh herbs, lime, Thai/Vietnamese styles)",
-          "Caribbean (jerk seasoning, tropical pairings)",
+          "Cajun (jerk seasoning, tropical pairings)",
           "Middle Eastern (shawarma, falafel, hummus, kebabs)",
           "Fusion / 'Surprise Me' (creative combinations)"
         ]
